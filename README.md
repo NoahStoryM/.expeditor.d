@@ -1,2 +1,0 @@
-# .expeditor.d
-My config files for racket's expeditor.
