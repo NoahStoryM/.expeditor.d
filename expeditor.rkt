@@ -5,8 +5,8 @@
 
 (define ee-parens
   (hash-copy
-   #hasheq([#\( . "[]"]
-           [#\[ . "()"]
+   #hasheq([#\( . "()"]
+           [#\[ . "[]"]
            [#\{ . "{}"]
            [#\" . "\"\""]
            [#\| . "||"])))
@@ -30,6 +30,10 @@
   (expeditor-bind-key! "^J"   ee-accept)
   (expeditor-bind-key! "\\ew" ee-bothward-delete-char)
 
+  (hash-set! ee-parens #\( "[]")
+  (expeditor-bind-key! #\) (make-ee-insert-string "]"))
+  (hash-set! ee-parens #\[ "()")
+  (expeditor-bind-key! #\] (make-ee-insert-string ")"))
   (for ([(k v) (in-hash ee-parens)])
     (expeditor-bind-key! (string k) ee-insert-paren)))
 
