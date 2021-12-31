@@ -7,7 +7,9 @@
   (hash-copy
    #hasheq([#\( . "[]"]
            [#\[ . "()"]
-           [#\{ . "{}"])))
+           [#\{ . "{}"]
+           [#\" . "\"\""]
+           [#\| . "||"])))
 
 (define ee-insert-paren
   (λ (ee entry c)
@@ -24,15 +26,15 @@
 
 
 (begin
-  ;; set keybind.
+  ;; set keybinding.
   (expeditor-bind-key! "^J"   ee-accept)
   (expeditor-bind-key! "\\ew" ee-bothward-delete-char)
-  (expeditor-bind-key! "("    ee-insert-paren)
-  (expeditor-bind-key! "["    ee-insert-paren)
-  (expeditor-bind-key! "{"    ee-insert-paren))
+
+  (for ([(k v) (in-hash ee-parens)])
+    (expeditor-bind-key! (string k) ee-insert-paren)))
 
 (begin
   ;; set color.
-  (expeditor-set-syntax-color! 'paren      'white)
-  (expeditor-set-syntax-color! 'identifier 'light-cyan)
+  (expeditor-set-syntax-color! 'identifier 'white)
+  (expeditor-set-syntax-color! 'paren      'light-gray)
   (expeditor-set-syntax-color! 'literal    'light-green))
