@@ -4,12 +4,12 @@
 
 
 (define ee-parens
-  (hash-copy
-   #hasheq([#\( . "()"]
-           [#\[ . "[]"]
-           [#\{ . "{}"]
-           [#\" . "\"\""]
-           [#\| . "||"])))
+  (make-hasheq
+   '([#\( . "()"]
+     [#\[ . "[]"]
+     [#\{ . "{}"]
+     [#\" . "\"\""]
+     [#\| . "||"])))
 
 (define ee-insert-paren
   (λ (ee entry c)
@@ -25,7 +25,7 @@
       (define ee-insert
         (if (ee-paste-mode?)
             ee-insert-paren
-            ee-insert-self/paren))
+            ee-insert-self))
       (for ([(k v) (in-hash ee-parens)])
         (expeditor-bind-key! k ee-insert))
       (ee-paste-mode? (not (ee-paste-mode?)))
